@@ -8,6 +8,17 @@ provider "aws" {
   }
 }
 
+action "aws_lambda_invoke" "api_handler" {
+  config {
+    function_name = aws_lambda_function.api_handler.function_name
+    payload = jsonencode({
+      message = "Invoke lambda from action",
+      type    = "test"
+    })
+  }
+}
+
+
 resource "aws_sqs_queue" "job_queue" {
   name = "${var.project_name}-queue"
 }
